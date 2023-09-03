@@ -1,10 +1,12 @@
+require("dotenv").config();
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
 const indexRouter = require('./routes')
+const PORT = +process.env.PORT || 5000
 
 
-mongoose.connect("mongodb://127.0.0.1/todoapp").then(()=>{
+mongoose.connect(process.env.DB_URL).then(()=>{
     console.log("Database connected")
 })
 
@@ -16,5 +18,6 @@ app.use((err, req, res, next)=>{
     res.status(500).json({data: "", msg:err})
 })
 
-app.listen(5555)
-console.log('App runing on port 5555')
+app.listen(PORT, ()=>{
+    console.log(`App runing on port ${PORT}`)
+})
