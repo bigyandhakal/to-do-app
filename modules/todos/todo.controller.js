@@ -9,7 +9,16 @@ const create = async(payload)=>{
 // get all data
 
 const list = async()=>{
-    return await Model.find();
+    return await Model.aggregate([
+        {
+          '$lookup': {
+            'from': 'subtasks', 
+            'localField': '_id', 
+            'foreignField': 'todo_id', 
+            'as': 'subtasks'
+          }
+        }
+      ]);
 }
 
 // get data by id
