@@ -1,12 +1,13 @@
 import Car from './Car';
 
 function App() {
-  return (
-    // Javascript in top
+  
+  const cars = ["ford", "audi", "bmw"]
 
+  return (
     // HTML below
     <div>
-      <Car />
+      <Car cars={cars}/>
     </div>
   );
 }
