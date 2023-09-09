@@ -6,10 +6,9 @@ const Posts = ({ posts }) => {
       <table>
         <thead>
           <tr>
-            <th>User Id</th>
-            <th>Id</th>
             <th>Title</th>
-            <th>Body</th>
+            <th>Status</th>
+            <th>Subtasks</th>
           </tr>
         </thead>
         <tbody>
@@ -17,10 +16,9 @@ const Posts = ({ posts }) => {
             posts.map((post, index) => {
               return (
                 <tr key={post?.id || index}>
-                  <td>{post?.userId}</td>
-                  <td>{post?.id}</td>
                   <td>{post?.title}</td>
-                  <td>{post?.body}</td>
+                  <td>{post?.status}</td>
+                  <td>{post?.subtasks}</td>
                 </tr>
               );
             })

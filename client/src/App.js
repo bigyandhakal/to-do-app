@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
-import Posts from "./Posts";
+// import Posts from "./Posts";
+import Lists from "./Todo";
 import "./Post.module.css";
 
 const App = () => {
-  const [posts, setPosts] = useState([]);
+  const [lists, setLists] = useState([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    fetch("http://127.0.0.1:5555/api/v1/todos/")
       .then((res) => res.json())
-      .then((data) => setPosts(data))
+      .then((data) => setLists(data))
       .catch((e) => console.log(e))
       .finally(() => {});
-  });
+  },[]);
 
   return (
     <>
-    <Posts posts={posts}/>
+    <Lists lists={lists}/>
     </>
   )
 
