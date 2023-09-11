@@ -91,31 +91,47 @@ const App = () => {
   const [id, setId] = useState(null);
   const [err, setError] = useState(null);
 
-  // useEffect(()=>{
-  //   setTimeout(()=>{
-  //     setCount((count)=>count + 1)
-  //   }, 1000)
-  // })
   useEffect(() => {
-    const fetchData = () => {
-      fetch("https://jsonplaceholder.typicode.com/posts")
+    let isMounted = false;
+    const fetchData = (id) => {
+      isMounted = true;
+      fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
         .then((d) => d.json())
         .then((d) => setData(d))
         .catch((e) => setError(e))
-        .finally();
+        .finally(()=>{
+          isMounted = false;
+        });
     };
-    fetchData();
-  }, []);
+    fetchData(id);
+    return ()=>{
+      isMounted = false;
+    }
+  }, [id]);
 
   return (
     <>
-    {data && data.length >0 ? (
-      data.map(()=>{
-        
-      })
-    ):(<>NO data found</>)}
-   </>
-  )
+    <input type="number" onChange={()=>setId(document.getElementById("postId").value)} id="postId" placeholder="Add user ID from 1 to 10" />
+    {/* <button onClick={()=>setId(document.getElementById("postId").value)}>Check Post Id</button> */}
+      {data && data.length > 0 ? (
+        <>
+          {data.map((post) => {
+            return (
+              <div key={post?.id}>
+                <p>{post?.userId}</p>
+                <p>{post?.id}</p>
+                <p>{post?.title}</p>
+                <p>{post?.body}</p>
+                <hr/>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <><hr/>No data found</>
+      )}
+    </>
+  );
 };
 
 export default App;
