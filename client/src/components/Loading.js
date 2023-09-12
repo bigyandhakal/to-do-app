@@ -1,7 +1,11 @@
-import React from 'react'
+import React from "react";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function Loading() {
+export default function Loading({count}) {
   return (
-    <div>Loading...</div>
-  )
+    <>
+      <Skeleton count={count} height={40} />
+    </>
+  );
 }

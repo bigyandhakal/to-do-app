@@ -10,17 +10,19 @@ export default function Todo() {
       _id: "1",
       title: "Do Laundry",
       status: "pending",
-      subtasks: [{ _id: "1", title: "Gather Laundry", status: "pending" }],
+      subtasks: [{ _id: "1", title: "Gather Laundry", status: "pending" },{ _id: "1", title: "Go to buy detergent", status: "completed" }],
     },
-    { _id: "1", title: "Do Homework", status: "completed", subtasks: [] },
+    { _id: "2", title: "Do Homework", status: "completed", subtasks: [] },
+    { _id: "3", title: "Go to gym", status: "completed", subtasks: [] },
   ];
   const [tasks, setTasks] = useState([]);
+  const countTask = fakeTask.length;
 
   useEffect (()=>{
     setTimeout(()=>{
       setTasks(fakeTask)
     }, 1000)
-  },[])
+  },[fakeTask])
   return (
     <>
       <Title title="TODO App" />
@@ -29,7 +31,7 @@ export default function Todo() {
         placeholder="Eg: Do laundry"
         btnName="Add task"
       />
-      { tasks && tasks.length > 0 ? <TaskList tasks={tasks} />:<Loading/>}
+      { tasks && tasks.length > 0 ? <TaskList tasks={tasks} />:<Loading count={countTask}/>}
     </>
   );
 }
