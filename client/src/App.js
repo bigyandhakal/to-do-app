@@ -1,6 +1,7 @@
 import React from "react";
 import Todo from "./pages/Todo";
 import { Container, Col, Row } from "react-bootstrap";
+import Toastr from "./global/toastr";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           </Col>
         </Row>
       </Container>
+      <Toastr showToast={false} />
     </>
   );
 };

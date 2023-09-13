@@ -19,7 +19,7 @@ export default function TaskList({ tasks }) {
                   <Accordion.Body>
                     {task && task.subtasks.length > 0 ? (
                       <>
-                      <SubtaskList />
+                      <SubtaskList subtasks={task.subtasks} />
                       </>
                     ) : (
                       <>
