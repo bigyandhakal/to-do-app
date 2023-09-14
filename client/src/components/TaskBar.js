@@ -11,11 +11,11 @@ export default function TaskBar({ title, status, completed, total }) {
           <>{title || "Task Name"}</>
         </Col>
         <Col>
-          {completed > 0 && total > 0 && (
+        {total > 1 && (
             <div>
               {completed || "-"} of {total || "-"} completed
             </div>
-          )}
+        )}
         </Col>
       </Row>
     </Container>

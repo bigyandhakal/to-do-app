@@ -12,23 +12,35 @@ export default function TaskList({ tasks }) {
         {tasks && tasks.length > 0 ? (
           tasks.map((task, index) => {
             return (
-                <Accordion.Item eventKey={index} key={task._id}>
-                  <Accordion.Header>
-                    <TaskBar status={task.status} title={task.title} completed={task.subtasks.filter((d) =>d.status === "completed").length} total={task.subtasks.length}/>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    {task && task.subtasks.length > 0 ? (
-                      <>
+              <Accordion.Item eventKey={index} key={task._id}>
+                <Accordion.Header>
+                  <TaskBar
+                    status={task.status}
+                    title={task.title}
+                    completed={
+                      task.subtasks.filter((d) => d.status === "completed")
+                        .length
+                    }
+                    total={task.subtasks.length}
+                  />
+                </Accordion.Header>
+                <Accordion.Body>
+                  {task && task.subtasks.length > 0 ? (
+                    <>
                       <SubtaskList subtasks={task.subtasks} />
-                      </>
-                    ) : (
-                      <>
-                        <MsgAlert msg="No subtask found. Add to get started" />
-                      </>
-                    )}
-                    <Add label="Add new subtask" placeholder="Eg: Gather clothes" btnName="Add new Subtask"/>
-                  </Accordion.Body>
-                </Accordion.Item>
+                    </>
+                  ) : (
+                    <>
+                      <MsgAlert msg="No subtask found. Add to get started" />
+                    </>
+                  )}
+                  <Add
+                    label="Add new subtask"
+                    placeholder="Eg: Gather clothes"
+                    btnName="Add new Subtask"
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
             );
           })
         ) : (
