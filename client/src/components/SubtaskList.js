@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { BsFillTrashFill } from "react-icons/bs";
 import { swalAlert } from "../utils/swal";
+import '../App.css'
 
 export default function SubtaskList({ subtasks }) {
   const handleChange = ()=>{}
@@ -30,7 +31,7 @@ export default function SubtaskList({ subtasks }) {
                   </Form.Group>
                 </Col>
                 <Col xs="3">
-                  <BsFillTrashFill onClick={handleDelete} />
+                  <BsFillTrashFill onClick={handleDelete} className="custom-button" />
                 </Col>
               </Row>
             </div>
