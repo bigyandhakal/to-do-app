@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { useApiContext } from "../contexts/ApiContext";
 import { Col, Form, Row } from "react-bootstrap";
 import { BsFillTrashFill } from "react-icons/bs";
 import { swalAlert } from "../utils/swal";
-import '../App.css'
+import Loading from "./Loading";
+import "../App.css";
 
-export default function SubtaskList({ subtasks }) {
-  const handleChange = ()=>{}
-  const handleDelete = ()=>{
+export default function SubtaskList({ subtasks, url }) {
+  const { loading, error, deleteById } = useApiContext();
+  const [subtask, setSubTask] = useState({ _id: "" });
+  const handleChange = () => {};
+  const handleDelete = async () => {
+    const id = { _id: subtask._id };
+    await deleteById({ url, id });
     swalAlert({});
+  };
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
+
+  if (error) {
+    return <>{JSON.stringify(error)}</>;
   }
   return (
     <>
@@ -20,7 +37,7 @@ export default function SubtaskList({ subtasks }) {
                 <Col xs="9">
                   <Form.Group>
                     <Form.Check
-                      style={{textAlign:"start"}}
+                      style={{ textAlign: "start" }}
                       type="checkbox"
                       defaultChecked={
                         subtask.status === "completed" ? true : false
@@ -31,7 +48,10 @@ export default function SubtaskList({ subtasks }) {
                   </Form.Group>
                 </Col>
                 <Col xs="3">
-                  <BsFillTrashFill onClick={handleDelete} className="custom-button" />
+                  <BsFillTrashFill
+                    onClick={handleDelete}
+                    className="custom-button"
+                  />
                 </Col>
               </Row>
             </div>

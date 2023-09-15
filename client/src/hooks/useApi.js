@@ -32,6 +32,17 @@ export default function useApi() {
     }
   }, []);
   const updateStatus = () => {};
-  const deleteById = () => {};
+  const deleteById = async({url}) => {
+    try {
+      setLoading(true)
+      await axios.delete(url);
+    } catch (error) {
+      const err = error ? error.message : "Delete API failed";
+      setError(err);
+    }finally{
+      list({url: URLS.SUBTASKS})
+      setLoading(false);
+    }
+  };
   return { loading, error, data, create, list, updateStatus, deleteById };
 }
