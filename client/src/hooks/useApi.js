@@ -25,7 +25,7 @@ export default function useApi() {
       const { data } = await axios(url);
       setData(data.data);
     } catch (error) {
-      const err = error ? error.message : "List API failed";
+      const err = error ? error.message : "List API fetch failed";
       setError(err);
     } finally {
       setLoading(false);
