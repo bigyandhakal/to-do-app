@@ -1,6 +1,6 @@
 // crud operation
 const Model = require('./subtask.model')
-
+const TodoModel = require("../todos/todo.model")
 
 // create
 const create = async(payload)=>{
@@ -23,10 +23,12 @@ const updateById = async(id, payload)=>{
     return await Model.findOneAndUpdate({_id:id}, payload, {new:true});
 }
 
-const updateStatus = async(id, payload)=>{
-    const {status} = payload;
-    if (!status) throw new Error("Status is required");
-    return await Model.findOneAndUpdate({_id:id}, {status}, {new: true})
+const updateStatus = async(id, status)=>{
+    const subtask = await Model.findOne({_id:id});
+    if(status.status === "pending"){
+        await TodoModel.findOneAndUpdate({_id:subtask.todo_id}, {status:"pending"}, {new:true})
+    }
+    return await Model.findOneAndUpdate({_id:id}, status, {new: true})
 }
 
 // delete by id

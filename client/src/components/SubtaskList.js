@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { useApiContext } from "../contexts/ApiContext";
 import { Col, Form, Row } from "react-bootstrap";
 import { BsFillTrashFill } from "react-icons/bs";
 import { swalAlert } from "../utils/swal";
 import Loading from "./Loading";
 import "../App.css";
+import { URLS } from "../constants";
 
-export default function SubtaskList({ subtasks, url }) {
-  const { loading, error, deleteById } = useApiContext();
-  const [subtask, setSubTask] = useState({ _id: "" });
-  const handleChange = () => {};
-  const handleDelete = async () => {
-    const id = { _id: subtask._id };
-    await deleteById({ url, id });
-    swalAlert({});
+export default function SubtaskList({ subtasks}) {
+  const { deleteById, updateStatus } = useApiContext();
+  const { loading, error } = useApiContext();
+  // const [subtask, setSubTask] = useState({ _id: "" });
+
+  const handleChange = async (e, id) => {
+    const payload = { status: e.target.checked ? "completed" : "pending" };
+    await updateStatus({ url: URLS.SUBTASKS, id, payload });
+  };
+
+  const handleDelete = async (id) => {
+    const d = await swalAlert();
+    if (d) {
+      await deleteById({ url: URLS.SUBTASKS, id });
+      return true;
+    }
+    return false;
   };
   if (loading) {
     return (
@@ -39,17 +49,17 @@ export default function SubtaskList({ subtasks, url }) {
                     <Form.Check
                       style={{ textAlign: "start" }}
                       type="checkbox"
-                      defaultChecked={
+                      checked={
                         subtask.status === "completed" ? true : false
                       }
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e, subtask._id)}
                       label={subtask.title || ""}
                     />
                   </Form.Group>
                 </Col>
                 <Col xs="3">
                   <BsFillTrashFill
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(subtask._id)}
                     className="custom-button"
                   />
                 </Col>

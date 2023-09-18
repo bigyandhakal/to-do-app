@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-export const swalAlert = async({successMsg}) => {
+export const swalAlert = async() => {
   const result = await Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -11,7 +11,7 @@ export const swalAlert = async({successMsg}) => {
     confirmButtonText: "Yes, delete it!",
   })
   if (!result.isConfirmed) return false;
-  const msg = successMsg || "Your data has been deleted"
+  const msg = "Your data has been deleted"
   Swal.fire("Deleted", msg, "success");
   return result.isConfirmed
 };

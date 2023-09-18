@@ -4,6 +4,7 @@ import TaskBar from "./TaskBar";
 import MsgAlert from "./MsgAlert";
 import SubtaskList from "./SubtaskList";
 import Add from "./Add";
+import { URLS } from "../constants";
 
 export default function TaskList({ tasks }) {
   return (
@@ -15,11 +16,13 @@ export default function TaskList({ tasks }) {
               <Accordion.Item eventKey={index} key={task._id}>
                 <Accordion.Header>
                   <TaskBar
+                  taskId = {task._id}
                     status={task.status}
                     title={task.title}
                     completed={
-                      task.subtasks.filter((d) => d.status === "completed")
-                        .length
+                      task.subtasks.filter((d) => {
+                        return d.status === "completed";
+                      }).length
                     }
                     total={task.subtasks.length}
                   />
@@ -35,6 +38,8 @@ export default function TaskList({ tasks }) {
                     </>
                   )}
                   <Add
+                    taskId={task._id}
+                    url={URLS.SUBTASKS}
                     label="Add new subtask"
                     placeholder="Eg: Gather clothes"
                     btnName="Add new Subtask"

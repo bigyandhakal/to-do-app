@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Toast, ToastContainer } from "react-bootstrap";
+import { useToastContext } from '../contexts/ToastContext';
 
-function BasicExample({showToast, title, msg}) {
-  const [show, setShow] = useState(showToast);
+function Toastr() {
+  const {show, setShow, toastMsg} = useToastContext();
   return (
     <ToastContainer position="bottom-end" className="p-3">
       <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
         <Toast.Header closeButton={false}>
-          <strong className="me-auto">{title || "Header"}</strong>
+          <strong className="me-auto">{toastMsg.title || "Header"}</strong>
         </Toast.Header>
-        <Toast.Body>{msg || "Body"}</Toast.Body>
+        <Toast.Body>{toastMsg.msg || "Body"}</Toast.Body>
       </Toast>
     </ToastContainer>
   );
 }
 
-export default BasicExample;
+export default Toastr;

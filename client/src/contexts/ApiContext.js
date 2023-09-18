@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useContext, createContext } from "react";
 import useApi from "../hooks/useApi";
 
 export const ApiContext = createContext(null);

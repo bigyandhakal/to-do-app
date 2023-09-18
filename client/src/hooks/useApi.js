@@ -2,7 +2,10 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 import { URLS } from "../constants";
 
+import { useToastContext } from "../contexts/ToastContext";
+
 export default function useApi() {
+  const { setShow, setToastMsg } = useToastContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -10,7 +13,19 @@ export default function useApi() {
   const create = async ({ url, payload }) => {
     try {
       setLoading(true);
-      await axios.post(url, payload);
+      const result = await axios.post(url, payload);
+      if (result) {
+        setShow(true);
+        setToastMsg((prev) => {
+          return {
+            ...prev,
+            title: url.includes("todos")
+              ? "New Todo Created"
+              : "New Subtask Created",
+            msg: `${payload.title} created`,
+          };
+        });
+      }
     } catch (error) {
       const err = error ? error.message : "Create API failed";
       setError(err);
@@ -31,16 +46,55 @@ export default function useApi() {
       setLoading(false);
     }
   }, []);
-  const updateStatus = () => {};
-  const deleteById = async({url}) => {
+
+  const updateStatus = async ({ url, id, payload }) => {
     try {
-      setLoading(true)
-      await axios.delete(url);
+      const API_URL = url + "/" + id;
+      setLoading(true);
+      const result = await axios.patch(API_URL, payload);
+      if (result) {
+        setShow(true);
+        setToastMsg((prev) => {
+          return {
+            ...prev,
+            title: API_URL.includes("todos")
+              ? "Todo Updated"
+              : "Subtask Updated",
+            msg: `Status changed tp ${payload.status}`,
+          };
+        });
+      }
+    } catch (error) {
+      const err = error ? error.message : "Update API failed";
+      setError(err);
+    } finally {
+      list({ url: URLS.TODOS });
+      setLoading(false);
+    }
+  };
+
+  const deleteById = async ({ url, id }) => {
+    try {
+      const API_URL = url + "/" + id;
+      setLoading(true);
+      const result = await axios.delete(API_URL);
+      if (result) {
+        setShow(true);
+        setToastMsg((prev) => {
+          return {
+            ...prev,
+            title: API_URL.includes("todos")
+              ? "Todo Deleted"
+              : "Subtask Deleted",
+            msg: `Deleted Successfully`,
+          };
+        });
+      }
     } catch (error) {
       const err = error ? error.message : "Delete API failed";
       setError(err);
-    }finally{
-      list({url: URLS.SUBTASKS})
+    } finally {
+      list({ url: URLS.TODOS });
       setLoading(false);
     }
   };

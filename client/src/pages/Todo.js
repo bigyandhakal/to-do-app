@@ -11,7 +11,9 @@ export default function Todo() {
   const { loading, error, list, data: tasks } = useApiContext();
   // const { loading, error, list, data: tasks } = useApi();
   useEffect(() => {
-    list({ url: URLS.TODOS });
+    setTimeout(()=>{
+      list({ url: URLS.TODOS })
+    }, 1000);
   }, [list]);
 
   if (error) return <>{JSON.stringify(error)}</>;
@@ -28,7 +30,7 @@ export default function Todo() {
       {tasks && tasks.length > 0 ? (
         <TaskList tasks={tasks} />
       ) : (
-        <Loading count={tasks.length} />
+        <Loading count={7}/>
       )}
     </>
   );
