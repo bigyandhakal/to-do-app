@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Title from "../components/Title";
 import Add from "../components/Add";
 import TaskList from "../components/TaskList";
+import MsgAlert from "../components/MsgAlert";
 import Loading from "../components/Loading";
 import { URLS } from "../constants";
 
@@ -30,7 +31,7 @@ export default function Todo() {
       {tasks && tasks.length > 0 ? (
         <TaskList tasks={tasks} />
       ) : (
-        <Loading count={7}/>
+        <MsgAlert msg="No task found"/>
       )}
     </>
   );
