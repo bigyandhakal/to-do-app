@@ -12,7 +12,7 @@ const App = () => {
           </Col>
         </Row>
       </Container>
-      <Toastr/>
+      <Toastr />
     </>
   );
 };

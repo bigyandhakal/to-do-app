@@ -36,7 +36,7 @@ export default function TaskBar({ title, status, completed, total, taskId }) {
           <>{title || "Task Name"}</>
         </Col>
         <Col>
-          {total > 1 && (
+          {total > 0 && (
             <div>
               {completed || "-"} of {total || "-"} completed
             </div>

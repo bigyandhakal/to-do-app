@@ -60,7 +60,7 @@ export default function useApi() {
             title: API_URL.includes("todos")
               ? "Todo Updated"
               : "Subtask Updated",
-            msg: `Status changed tp ${payload.status}`,
+            msg: `Status changed to ${payload.status}`,
           };
         });
       }

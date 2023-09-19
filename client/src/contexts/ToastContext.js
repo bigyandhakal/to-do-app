@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React,{ createContext, useState, useContext } from "react";
 
 const ToastContext = createContext(null);
 
@@ -8,16 +8,20 @@ export default function ToastContextProvider({ children }) {
     title: "",
     msg: "",
   });
+
   return (
-    <ToastContextProvider value={{ show, setShow, toastMsg, setToastMsg }}>
+    <ToastContext.Provider value={{ show, setShow, toastMsg, setToastMsg }}>
       {children}
-    </ToastContextProvider>
+    </ToastContext.Provider>
   );
 }
 
 export const useToastContext = () => {
   const context = useContext(ToastContext);
   if (!context)
-    throw new Error("Toast context must be wrapped with context provider");
+    throw new Error(
+      "Toast Context must be wrapped within toast context provider"
+    );
+
   return context;
 };

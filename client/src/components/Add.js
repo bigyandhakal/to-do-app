@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { InputGroup, Form, Button } from "react-bootstrap";
-import Loading from "./Loading";
-// import useApi from "../hooks/useApi";
-// import { ApiContext } from "../contexts/ApiContext";
 import { useApiContext } from "../contexts/ApiContext";
 
 export default function Add({ url, label, placeholder, btnName, taskId }) {
-  const { loading, error, create } = useApiContext();
+  const { error, create } = useApiContext();
 
   const [task, setTask] = useState({ title: "" });
-  // const { error, loading, create } = useApi();
-
   const handleClick = async () => {
     const payload = { title: task.title };
     if (taskId) {
@@ -19,14 +14,6 @@ export default function Add({ url, label, placeholder, btnName, taskId }) {
     await create({ url, payload });
     setTask({ title: "" });
   };
-
-  if (loading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
-  }
 
   if (error) {
     return <>{JSON.stringify(error)}</>;

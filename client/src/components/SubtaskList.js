@@ -3,14 +3,11 @@ import { useApiContext } from "../contexts/ApiContext";
 import { Col, Form, Row } from "react-bootstrap";
 import { BsFillTrashFill } from "react-icons/bs";
 import { swalAlert } from "../utils/swal";
-import Loading from "./Loading";
-import "../App.css";
 import { URLS } from "../constants";
 
 export default function SubtaskList({ subtasks}) {
   const { deleteById, updateStatus } = useApiContext();
-  const { loading, error } = useApiContext();
-  // const [subtask, setSubTask] = useState({ _id: "" });
+  const { error } = useApiContext();
 
   const handleChange = async (e, id) => {
     const payload = { status: e.target.checked ? "completed" : "pending" };
@@ -25,14 +22,6 @@ export default function SubtaskList({ subtasks}) {
     }
     return false;
   };
-  if (loading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
-  }
-
   if (error) {
     return <>{JSON.stringify(error)}</>;
   }

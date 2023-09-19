@@ -1,16 +1,13 @@
 import { useApiContext } from "../contexts/ApiContext";
-// import useApi from "../hooks/useApi";
 import React, { useEffect } from "react";
 import Title from "../components/Title";
 import Add from "../components/Add";
 import TaskList from "../components/TaskList";
 import MsgAlert from "../components/MsgAlert";
-import Loading from "../components/Loading";
 import { URLS } from "../constants";
 
 export default function Todo() {
-  const { loading, error, list, data: tasks } = useApiContext();
-  // const { loading, error, list, data: tasks } = useApi();
+  const { error, list, data: tasks } = useApiContext();
   useEffect(() => {
     setTimeout(()=>{
       list({ url: URLS.TODOS })
@@ -18,7 +15,6 @@ export default function Todo() {
   }, [list]);
 
   if (error) return <>{JSON.stringify(error)}</>;
-  if (loading) return <Loading />;
   return (
     <>
       <Title title="TODO App" />
